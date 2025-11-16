@@ -9,15 +9,17 @@ Sugerimos o uso das seguintes ferramentas acessíveis: [FullCalendar](https://fu
 
 ## Informações do trabalho
 
-- Nome:
+- Nome: Bernardo Belini Vale
 - Matricula:
-- Proposta de projeto escolhida:
-- Breve descrição sobre seu projeto:
+- Proposta de projeto escolhida: Mapa do Brasil com os eventos automotivos
+- Breve descrição sobre seu projeto: 
+  - O projeto consiste em um mapa interativo que mostra os eventos automotivos ocorridos no Brasil.
+  - Os usuários podem visualizar os eventos em um mapa, clicar em um evento para ver mais detalhes e filtrar os eventos por tipo (ex: showroom, rally, etc.).
 
 **Print da tela com a implementação**
 
 << Coloque aqui uma breve explicação da implementação feita nessa etapa>>
 
-<<  COLOQUE A IMAGEM TELA 1 AQUI >>
+![alt text](<public/imagens/Mapa evenmtos.png>)
 
-<<  COLOQUE A IMAGEM TELA 2 AQUI >>
+
