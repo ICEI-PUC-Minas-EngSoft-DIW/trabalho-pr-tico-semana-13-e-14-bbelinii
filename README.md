@@ -18,7 +18,7 @@ Sugerimos o uso das seguintes ferramentas acessíveis: [FullCalendar](https://fu
 
 **Print da tela com a implementação**
 
-<< Coloque aqui uma breve explicação da implementação feita nessa etapa>>
+Essa implementacao faz com que os usurios possam ver o mapa dos proximos eventos automotivos no Brasil. Assim que o botao for acionado, o mapa sera carregado com os eventos ocorridos.
 
 ![alt text](<public/imagens/Mapa evenmtos.png>)
 
