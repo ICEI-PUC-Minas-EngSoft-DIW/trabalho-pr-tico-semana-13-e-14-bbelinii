@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>2-Step Blog</title>
+  <link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <img src="imagens/logo.png" alt="2-Step logo">
+      </div>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="#">Início</a></li>
+          <li><a href="#">Categorias</a></li>
+          <li><a href="postagem.html">Postagens</a></li>
+          <li><a href="#">Entrar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="banner">
+    <p>O seu conhecimento pode sanar a curiosidade de alguém!</p>
+  </section>
+
+  <main class="paineis">
+    <aside class="painel painel-esquerdo">
+      <nav class="principais">
+        <p class="title">Categorias</p>
+        <ul>
+          <li>Motores</li>
+          <li>Turbo</li>
+          <li>Elétrica</li>
+          <li>Estética</li>
+          <li>Injeção Programável</li>
+          <li>Reprogramação Eletrônica</li>
+        </ul>
+      </nav>
+    </aside>
+    <section class="painel painel-direito">
+      <div class="busca">
+        <input type="text" id="busca" placeholder="Buscar Postagem...">
+        <button id="criar">Criar nova postagem</button>
+      </div>
+      <div id="form-container" style="display:none; margin-top:12px;">
+        <form id="form-postagem">
+          <input type="text" id="titulo" name="titulo" placeholder="Título" required>
+          <input type="text" id="autor" name="autor" placeholder="Autor" required>
+          <input type="text" id="data" name="data" placeholder="Data">
+          <input type="text" id="membro" name="membro" placeholder="Membro desde">
+          <input type="text" id="imagem" name="imagem" placeholder="Imagem (caminho)">
+          <input type="text" id="categoria" name="categoria" placeholder="Categoria">
+          <textarea id="texto" name="texto" placeholder="Texto" rows="4" required></textarea>
+          <button type="submit">Salvar postagem</button>
+        </form>
+      </div>
+      <h3>Postagens</h3>
+      <div class="postagens"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Copyright @ 2025 - 2-Step Automotive Blog</p>
+    <img src="imagens/Logo Footer.png" alt="Logo footer">
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    function criarPostagem(post) {
+      const article = document.createElement('article');
+      article.className = 'postagem';
+
+      let textoResumido = post.texto;
+      if (textoResumido.length > 150) {
+        textoResumido = textoResumido.substring(0, 150) + '...';
+      }
+
+      article.innerHTML = `
+        <img src="${post.imagem}" alt="autor">
+        <div class="conteudo">
+          <h4>Autor: ${post.autor}</h4>
+          <p class="data">Data de publicação: ${post.data}</p>
+          <p class="texto">${textoResumido}</p>
+          <p class="membro">Membro desde: ${post.membro}</p>
+        </div>
+      `;
+
+      article.onclick = function() {
+        window.location.href = 'postagem.html?id=' + post.id;
+      };
+
+      return article;
+    }
+
+    let cachePostagens = [];
+
+    async function mostrarPostagens() {
+      const container = document.querySelector('.postagens');
+      container.innerHTML = '';
+
+      cachePostagens = await carregarPostagens();
+      for (let i = 0; i < cachePostagens.length; i++) {
+        const postagem = criarPostagem(cachePostagens[i]);
+        container.appendChild(postagem);
+      }
+    }
+
+    function buscarPostagens() {
+      const termoBusca = document.getElementById('busca').value.toLowerCase();
+      const container = document.querySelector('.postagens');
+      container.innerHTML = '';
+
+      for (let i = 0; i < cachePostagens.length; i++) {
+        const post = cachePostagens[i];
+
+        if (post.autor.toLowerCase().includes(termoBusca) || 
+            post.texto.toLowerCase().includes(termoBusca)) {
+          const postagem = criarPostagem(post);
+          container.appendChild(postagem);
+        }
+      }
+    }
+
+    window.onload = function() {
+      mostrarPostagens();
+      document.getElementById('busca').oninput = buscarPostagens;
+      document.getElementById('criar').onclick = function() {
+        const box = document.getElementById('form-container');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+      };
+
+      document.getElementById('form-postagem').onsubmit = async function(e) {
+        e.preventDefault();
+        const data = {
+          titulo: document.getElementById('titulo').value,
+          autor: document.getElementById('autor').value,
+          data: document.getElementById('data').value || new Date().toLocaleDateString('pt-BR'),
+          texto: document.getElementById('texto').value,
+          membro: document.getElementById('membro').value || new Date().toLocaleDateString('pt-BR'),
+          imagem: document.getElementById('imagem').value || 'imagens/Perfil 3.png',
+          categoria: document.getElementById('categoria').value || ''
+        };
+
+        await criarPostagem(data);
+        e.target.reset();
+        document.getElementById('form-container').style.display = 'none';
+        await mostrarPostagens();
+        alert('Postagem criada com sucesso!');
+      };
+    };
+  </script>
+</body>
+</html>

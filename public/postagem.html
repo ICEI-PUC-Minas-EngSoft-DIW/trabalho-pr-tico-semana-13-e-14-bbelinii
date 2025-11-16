@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Detalhes da Postagem - 2-Step</title>
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="postagens.css?v=2">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <img src="imagens/logo.png" alt="2-Step logo">
+            </div>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="#">Categorias</a></li>
+                    <li><a href="#">Postagens</a></li>
+                    <li><a href="#">Entrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="voltar">
+            <button>Voltar para a página inicial</button>
+        </div>
+    </main>
+
+    <main class="container detalhe">
+        <h1 class="detalhes-titulo">Detalhes da Postagem</h1>
+        <div class="postagem-detalhes">
+            <div id="postagem-conteudo"></div>
+
+            <section class="galeria-section">
+                <h3>Fotos da Postagem</h3>
+                <div id="galeria" class="galeria"></div>
+            </section>
+
+            <section class="edicao-section">
+                <h3>Editar/Excluir</h3>
+                <div class="acoes">
+                    <button id="btn-editar" type="button">Editar</button>
+                    <button id="btn-excluir" type="button">Excluir</button>
+                </div>
+                <form id="form-edicao" style="display:none; margin-top:10px;">
+                    <input type="text" id="e-titulo" placeholder="Título" required>
+                    <input type="text" id="e-autor" placeholder="Autor" required>
+                    <input type="text" id="e-data" placeholder="Data">
+                    <input type="text" id="e-membro" placeholder="Membro desde">
+                    <input type="text" id="e-imagem" placeholder="Imagem (caminho)">
+                    <input type="text" id="e-categoria" placeholder="Categoria">
+                    <textarea id="e-texto" placeholder="Texto" rows="4" required></textarea>
+                    <button type="submit">Salvar alterações</button>
+                </form>
+            </section>
+
+            <section class="postagens-section">
+                <h3>Todas as postagens</h3>
+                <div id="todas-postagens" class="postagens-grid"></div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Copyright @ 2025 - 2-Step Automotive Blog</p>
+        <img src="imagens/Logo Footer.png" alt="Logo footer">
+    </footer>
+
+    <script src="app.js?v=3"></script>
+    <script>
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+
+        function obterParametroUrl(nome) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nome);
+        }
+
+        function calcularTempoLeitura(texto) {
+            const palavras = texto.trim().split(/\s+/).length;
+            const minutos = Math.max(1, Math.round(palavras / 200));
+            return `${minutos} min de leitura`;
+        }
+
+        function renderizarPostagemDetalhe(post) {
+            const tempoLeitura = calcularTempoLeitura(post.texto);
+            const conteudoHTML = `
+                <article class="postagem-completa">
+                    <div class="postagem-hero">
+                        <img src="${post.imagem}" alt="${post.autor}" class="hero-imagem">
+                        <div class="hero-info">
+                            <h2 class="hero-titulo">${post.titulo || 'Postagem'}</h2>
+                            <ul class="hero-metas">
+                                <li><strong>Autor:</strong> ${post.autor}</li>
+                                <li><strong>Publicado em:</strong> ${post.data}</li>
+                                <li><strong>Membro desde:</strong> ${post.membro}</li>
+                                <li><strong>Categoria:</strong> ${post.categoria || '—'}</li>
+                                <li><strong>Leitura:</strong> ${tempoLeitura}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="postagem-texto">
+                        <p>${post.texto}</p>
+                    </div>
+                </article>
+            `;
+            document.getElementById('postagem-conteudo').innerHTML = conteudoHTML;
+        }
+
+        function renderizarGaleria(fotos) {
+            const container = document.getElementById('galeria');
+            container.innerHTML = '';
+            (fotos || []).forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Foto do item';
+                container.appendChild(img);
+            });
+        }
+
+        function criarCardPostagem(post) {
+            const card = document.createElement('article');
+            card.className = 'postagem-card';
+            const resumo = post.texto.length > 110 ? post.texto.substring(0, 110) + '...' : post.texto;
+            card.innerHTML = `
+                <img src="${post.imagem}" alt="${post.autor}">
+                <div class="card-conteudo">
+                    <h4>${post.titulo || post.autor}</h4>
+                    <p class="card-meta">${post.autor} • ${post.data}</p>
+                    <p class="card-texto">${resumo}</p>
+                </div>
+            `;
+            card.onclick = () => {
+                window.location.href = 'postagem.html?id=' + post.id;
+            };
+            return card;
+        }
+
+        function renderizarTodasPostagens(postAtual) {
+            const container = document.getElementById('todas-postagens');
+            container.innerHTML = '';
+            const lista = postagens.filter(p => p.id !== postAtual.id);
+            lista.forEach(p => container.appendChild(criarCardPostagem(p)));
+        }
+
+        const idPostagem = obterParametroUrl('id');
+
+        async function carregarDetalhe() {
+            try {
+                const p = await carregarPostagem(idPostagem);
+                if (p && p.id) {
+                    renderizarPostagemDetalhe(p);
+                    renderizarGaleria(p.fotos);
+                    const todas = await carregarPostagens();
+                    renderizarTodasPostagens(p, todas);
+
+                    document.getElementById('e-titulo').value = p.titulo || '';
+                    document.getElementById('e-autor').value = p.autor || '';
+                    document.getElementById('e-data').value = p.data || '';
+                    document.getElementById('e-membro').value = p.membro || '';
+                    document.getElementById('e-imagem').value = p.imagem || '';
+                    document.getElementById('e-categoria').value = p.categoria || '';
+                    document.getElementById('e-texto').value = p.texto || '';
+                } else {
+                    document.getElementById('postagem-conteudo').innerHTML = '<p>Postagem não encontrada!</p>';
+                }
+            } catch (e) {
+                document.getElementById('postagem-conteudo').innerHTML = '<p>Erro ao carregar postagem!</p>';
+            }
+        }
+
+        function renderizarTodasPostagens(postAtual, lista) {
+            const container = document.getElementById('todas-postagens');
+            container.innerHTML = '';
+            (lista || []).filter(p => p.id !== postAtual.id).forEach(p => container.appendChild(criarCardPostagem(p)));
+        }
+
+        carregarDetalhe();
+
+        document.getElementById('btn-editar').onclick = function() {
+            const f = document.getElementById('form-edicao');
+            f.style.display = f.style.display === 'none' ? 'block' : 'none';
+        };
+
+        document.getElementById('form-edicao').onsubmit = async function(e) {
+            e.preventDefault();
+            const data = {
+                id: idPostagem,
+                titulo: document.getElementById('e-titulo').value,
+                autor: document.getElementById('e-autor').value,
+                data: document.getElementById('e-data').value,
+                texto: document.getElementById('e-texto').value,
+                membro: document.getElementById('e-membro').value,
+                imagem: document.getElementById('e-imagem').value,
+                categoria: document.getElementById('e-categoria').value
+            };
+            await atualizarPostagem(idPostagem, data);
+            await carregarDetalhe();
+            alert('Postagem atualizada!');
+        };
+
+        document.getElementById('btn-excluir').onclick = async function() {
+            if (confirm('Confirma excluir esta postagem?')) {
+                await excluirPostagem(idPostagem);
+                window.location.href = 'index.html';
+            }
+        };
+
+        function voltartela() {
+            var voltatela = document.getElementsByClassName("voltar");
+            if (voltatela.length > 0) {
+                voltatela[0].onclick = function () {
+                    window.location.href = "index.html"
+                }
+            }
+        }
+        voltartela()
+    </script>
+</body>
+
+</html>

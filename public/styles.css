@@ -1,0 +1,309 @@
+@font-face {
+    font-family: 'race';
+    src: url('./fonte/High Speed.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #EEF7FB;
+    color: #222;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.t1 h1 {
+    display: inline;
+    font-size: smaller;
+}
+
+.site-header {
+    background: linear-gradient(90deg, #111 0%, #6F6F6F 100%);
+    color: #fff;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    height: 72px;
+    display: block;
+}
+
+.site-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 22px;
+}
+
+.site-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    opacity: 0.95;
+    transition: color .2s, opacity .2s;
+}
+
+.site-nav a:hover {
+    color: #00a0ff;
+    opacity: 1;
+}
+
+.banner {
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 18px 20px;
+    text-align: center;
+}
+
+.banner p {
+    margin: 0;
+    font-family: 'race', sans-serif;
+    font-size: 28px;
+    color: #0B2B3A;
+    letter-spacing: 1px;
+}
+
+.paineis {
+    flex: 1 0 auto;
+    display: flex;
+    width: 100%;
+    gap: 0;
+    padding: 0;
+}
+
+.painel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.painel-esquerdo {
+    flex: 0 0 320px;
+    max-width: 420px;
+    background: #fff;
+    padding: 20px;
+    border-right: 1px solid #e5e5e5;
+}
+
+.painel-direito {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+}
+
+
+.painel-direito>h3 {
+    font-family: 'race', sans-serif;
+    text-align: center;
+    font-size: 120%;
+}
+
+.principais .title {
+    font-family: 'race', sans-serif;
+    font-size: 22px;
+    margin: 0 0 12px;
+}
+
+.principais ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.principais li {
+    font-size: 17px;
+    margin: 10px 0;
+    color: #222;
+    font-weight: 600;
+}
+
+.principais li:hover {
+    color: #007BFF;
+    cursor: pointer;
+}
+
+.busca {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.busca input {
+    padding: 10px 14px;
+    border-radius: 22px;
+    border: 2px solid #333;
+    outline: none;
+    width: 260px;
+}
+
+.busca input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.12);
+}
+
+#criar {
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#criar:hover {
+    background: #0056b3;
+}
+
+.postagens {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.postagem {
+    display: flex;
+    gap: 18px;
+    background: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    align-items: flex-start;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.postagem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.postagem img {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    flex-shrink: 0;
+}
+
+.conteudo h4 {
+    margin: 0 0 6px;
+    font-size: 18px;
+}
+
+.conteudo .data {
+    color: #666;
+    font-size: 13px;
+    margin: 0 0 10px;
+}
+
+.conteudo .texto {
+    margin: 0 0 10px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.conteudo .membro {
+    margin: 0;
+    color: #777;
+    font-size: 13px;
+}
+
+.site-footer {
+    background: linear-gradient(90deg, #111 0%, #6F6F6F 100%);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    margin-top: auto;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+}
+
+.site-footer img {
+    height: 40px;
+}
+
+@media (max-width: 980px) {
+    .banner p {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 780px) {
+    .paineis {
+        display: block;
+        padding: 0 14px;
+    }
+
+    .painel-esquerdo {
+        margin-bottom: 20px;
+        border-right: none;
+    }
+
+    .busca {
+        justify-content: flex-start;
+        margin-bottom: 16px;
+    }
+
+    .busca input {
+        width: 60%;
+    }
+}
+
+@media (max-width: 420px) {
+    .banner p {
+        font-size: 18px;
+    }
+
+    .site-nav ul {
+        gap: 12px;
+    }
+
+    .busca input {
+        width: 100%;
+    }
+
+    .postagem {
+        padding: 15px;
+    }
+}
+
+.detalhe {
+    display: block;
+    padding: 0 20px;
+}
+
+.detalhe .postagem-detalhes {
+    max-width: 1000px;
+    margin: 0 auto;
+}
