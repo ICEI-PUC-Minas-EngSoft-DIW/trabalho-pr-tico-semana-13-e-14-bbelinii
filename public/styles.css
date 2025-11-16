@@ -147,6 +147,28 @@ body {
     cursor: pointer;
 }
 
+/* Botão: ir para o mapa */
+#botao-api {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: linear-gradient(180deg, #1e90ff 0%, #0d74d1 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 10px rgba(13, 116, 209, 0.25);
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+
+#botao-api:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(13, 116, 209, 0.35);
+    filter: brightness(1.05);
+}
+
 .busca {
     display: flex;
     justify-content: flex-end;

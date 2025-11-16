@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mapa dos eventos</title>
+    <link rel="stylesheet" href="styles.css?v=4">
+    <!-- Mapbox GL JS CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        /* Placeholder para o mapa; ajuste conforme a API escolhida */
+        #map {
+            height: 70vh;
+            border: 1px solid #ccc;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">
+                <img src="imagens/logo.png" alt="2-Step logo">
+            </div>
+            <nav class="site-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="#">Categorias</a></li>
+                    <li><a href="postagem.html">Postagens</a></li>
+                    <li><a href="#">Entrar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="paineis">
+        <section class="painel painel-direito" style="width:100%">
+            <h3>Mapa de Eventos</h3>
+            <div id="map"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>Copyright @ 2025 - 2-Step Automotive Blog</p>
+        <img src="imagens/Logo Footer.png" alt="Logo footer">
+    </footer>
+
+    <script src="app.js"></script>
+    <!-- Mapbox GL JS Library -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <script>
+        const centralLatLong = [-43.9397233, -19.9332786]; // Ponto central do mapa (Belo Horizonte)
+
+        const locais = [
+            {
+                "id": 1,
+                "descricao": "Encontro de Carros Antigos - Mineirão",
+                "endereco": "Av. Antônio Abrahão Caram, 1001 - Pampulha",
+                "favorito": true,
+                "cidade": "Belo Horizonte",
+                "latlong": [-43.9719, -19.8656],
+                "url": "https://mineirao.com.br/",
+                "cor": "red"
+            },
+            {
+                "id": 2,
+                "descricao": "Mostra Automotiva - Expominas",
+                "endereco": "Av. Amazonas, 6020 - Gameleira",
+                "favorito": false,
+                "cidade": "Belo Horizonte",
+                "latlong": [-43.9825, -19.9399],
+                "url": "https://www.expominas.mg.gov.br/",
+                "cor": "blue"
+            },
+            {
+                "id": 3,
+                "descricao": "Cars & Coffee - Praça da Savassi",
+                "endereco": "Praça Diogo de Vasconcelos - Savassi",
+                "favorito": true,
+                "cidade": "Belo Horizonte",
+                "latlong": [-43.9348, -19.9320],
+                "url": "#",
+                "cor": "green"
+            },
+            {
+                "id": 4,
+                "descricao": "Expo Tuning - Orla da Pampulha",
+                "endereco": "Av. Otacílio Negrão de Lima - Pampulha",
+                "favorito": true,
+                "cidade": "Belo Horizonte",
+                "latlong": [-43.9590, -19.8420],
+                "url": "#",
+                "cor": "orange"
+            },
+            {
+                "id": 5,
+                "descricao": "Feirão de Autopeças - BH Shopping",
+                "endereco": "Rod. BR-356, 3049 - Belvedere",
+                "favorito": false,
+                "cidade": "Belo Horizonte",
+                "latlong": [-43.9419, -19.9849],
+                "url": "https://www.bhshopping.com.br/",
+                "cor": "purple"
+            },
+            {
+                "id": 6,
+                "descricao": "Meet de Clubes - Parque Municipal",
+                "endereco": "Av. Afonso Pena, 1000 - Centro",
+                "favorito": true,
+                "cidade": "Belo Horizonte",
+                "latlong": [-43.9401, -19.9173],
+                "url": "#",
+                "cor": "black"
+            },
+            {
+                "id": 7,
+                "descricao": "Show & Shine - Praça da Liberdade",
+                "endereco": "Praça da Liberdade - Funcionários",
+                "favorito": true,
+                "cidade": "Belo Horizonte",
+                "latlong": [-43.9397233, -19.9332786],
+                "url": "https://www.facebook.com/pracadaliberdadebh/",
+                "cor": "red"
+            },
+            {
+                "id": 8,
+                "descricao": "Noite do Horto - Estádio Independência",
+                "endereco": "R. Pitangui, 3230 - Horto",
+                "favorito": false,
+                "cidade": "Belo Horizonte",
+                "latlong": [-43.9261, -19.9108],
+                "url": "https://estadioindependencia.com.br/",
+                "cor": "blue"
+            }
+        ]
+
+        let map;
+
+        // Função que carrega os dados de unidades da PUC Minas
+        window.onload = () => {
+            montarMapa(locais);
+        }
+
+        function montarMapa(dadosLocais) {
+            // Defina o Access Token do Mapbox
+            mapboxgl.accessToken = 'pk.eyJ1IjoiYmJlbGluaSIsImEiOiJjbWkxd3lyanQxOXBjMmpweTRmdnhrNmY4In0.wtNxK15G87GpcLnV1yJxMA';
+            map = new mapboxgl.Map({
+                container: 'map', // O container do mapa
+                style: 'mapbox://styles/mapbox/streets-v12', // Estilo do mapa
+                center: centralLatLong, // Localização central do mapa
+                zoom: 9 // Zoom inicial
+            });
+
+            // Adiciona marcadores para cada local
+            dadosLocais.forEach((uni) => {
+                let popup = new mapboxgl.Popup({ offset: 25 })
+                    .setHTML(`<h3><a href="${uni.url}" target="_blank">${uni.descricao}</a></h3><br>${uni.endereco} <br> ${uni.cidade}`);
+                const marker = new mapboxgl.Marker({ color: uni.cor })
+                    .setLngLat(uni.latlong)
+                    .setPopup(popup)
+                    .addTo(map);
+            });
+
+            // Obtém a localização do usuário e adiciona um marcador
+            navigator.geolocation.getCurrentPosition(processarGetCurrentPosition, () => { alert('Erro ao obter localização.') });
+        }
+
+        // Função para processar a localização do usuário
+        function processarGetCurrentPosition(local) {
+            let popup = new mapboxgl.Popup({ offset: 25 })
+                .setHTML(`<h3> Estou aqui!!! </h3>`);
+            const marker = new mapboxgl.Marker({ color: 'yellow' })
+                .setLngLat([local.coords.longitude, local.coords.latitude])
+                .setPopup(popup)
+                .addTo(map);
+        }
+
+    </script>
+</body>
+
+</html>

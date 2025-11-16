@@ -8,11 +8,75 @@
       "email": "admin@abc.com"
     },
     {
+      "email": "user_novo@abc.com",
+      "nome": "Usuario Comum Atualizado",
       "id": "ec37c83d-4b7f-458d-9e10-3fda7d37cd3e",
-      "login": "user",
-      "senha": "123",
-      "nome": "Usuario Comum",
-      "email": "user@abc.com"
+      "login": "user_atualizado",
+      "senha": "nova123"
+    },
+    {
+      "email": "novo@teste.com",
+      "nome": "Novo Usuario Teste",
+      "login": "novousuario",
+      "senha": "123456",
+      "id": "ASQUMVv"
+    }
+  ],
+  "postagens": [
+    {
+      "id": "2",
+      "autor": "Maria Clara Santos",
+      "data": "10 de setembro de 2025 - ATUALIZADO",
+      "texto": "Oi pessoal, vim compartilhar um problema RESOLVIDO que estava me incomodando no meu Honda Civic...",
+      "membro": "19/04/2025",
+      "imagem": "imagens/barney.jpeg",
+      "titulo": "Ruído seco na dianteira do Civic 2014",
+      "categoria": "Suspensão",
+      "fotos": [
+        "imagens/barney.jpeg",
+        "imagens/Screenshot_1.png",
+        "imagens/home page.png"
+      ]
+    },
+    {
+      "id": "4",
+      "autor": "Carlos Eduardo",
+      "data": "07 de setembro de 2025",
+      "texto": "No meu Gol 1.6 a luz da injeção acendeu e a marcha lenta fica oscilando. Limpamos TBI e trocamos filtro de ar, mas o problema persiste. Vi relatos sobre sensor MAP e possíveis entradas de ar falso. Alguma checklist simples que eu mesmo consigo fazer em casa?",
+      "membro": "11/02/2025",
+      "imagem": "imagens/Perfil 4.jpg",
+      "titulo": "Luz da injeção e marcha lenta oscilando",
+      "categoria": "Injeção Eletrônica",
+      "fotos": [
+        "imagens/Perfil 4.jpg",
+        "imagens/Site pronto.png",
+        "imagens/wireframe.jpg"
+      ]
+    },
+    {
+      "id": "5",
+      "autor": "Ana Beatriz",
+      "data": "05 de setembro de 2025",
+      "texto": "Tenho um Onix 1.0 e notei um ruído vindo da região da bomba de combustível nas primeiras partidas do dia. Uso gasolina aditivada e mantenho revisões em dia. Pode ser regulador de pressão ou alguma sujeira na peneira? Alguma recomendação de teste simples?",
+      "membro": "04/03/2025",
+      "imagem": "imagens/perfil 5.png",
+      "titulo": "Ruído na bomba de combustível ao ligar",
+      "categoria": "Combustível",
+      "fotos": [
+        "imagens/perfil 5.png",
+        "imagens/home page.png",
+        "imagens/Screenshot_1.png"
+      ]
+    },
+    {
+      "id": "ENd99mM",
+      "titulo": "Dicas de manutenção preventiva",
+      "autor": "Carlos Silva",
+      "data": "15 de dezembro de 2024",
+      "texto": "Compartilhando dicas de manutenção preventiva para carros esportivosaaa...",
+      "membro": "20/11/2024",
+      "imagem": "imagens/fastback 1.jpg",
+      "categoria": "Manutenção"
     }
   ]
 }

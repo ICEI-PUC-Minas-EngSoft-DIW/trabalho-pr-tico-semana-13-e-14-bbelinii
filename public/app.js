@@ -40,3 +40,11 @@ window.criarPostagem = criarPostagem;
 window.atualizarPostagem = atualizarPostagem;
 window.excluirPostagem = excluirPostagem;
 
+document.addEventListener("DOMContentLoaded", () => {
+  const apiButton = document.getElementById('botao-api');
+  if (apiButton) {
+    apiButton.addEventListener('click', () => {
+      window.location.href = 'mapa.html';
+    });
+  }
+});
